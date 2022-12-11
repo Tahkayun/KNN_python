@@ -1,0 +1,24 @@
+logic [7:0] a, b, c;  
+logic [7:0] d_array[0:3];  
+logic [7:0] e_array[3:0];                // note index of unpacked dimension is reversed  
+                            
+logic [7:0] mult_array_a[3:0][3:0];  
+logic [7:0] mult_array_b[3:0][3:0];  
+   
+always_ff @(posedge clk, negedge rst_n)  
+  if (!rst_n) begin  
+    d_array <= '{default:0};                                  // assign 0 to all elements of array  
+  end  
+    
+  else begin  
+    d_array        <= '{A00, c, b, a};                    // d_array[0]=A00, d_array[1]=c,      
+                                                                             d_array[2]=b, d_array[3]=a  
+  
+    e_array        <= '{A00, c, b, a};                    // e_array[3]=A00, e_array[2]=c,     
+                                                                             e_array[1]=b, d_array[0]=a  
+  
+    mult_array_a   <= '{'{A00, A01, A02, A03}, '{A04, A05, A06, A07},  
+                                    '{A08, A09, A0a, A0b},  
+                                    '{A0c, A0d, A0e, A0f}};               // assign to full array  
+    mult_array_b[3] <= '{A00, A01, A02, A03};        // assign to slice of array  
+  end
